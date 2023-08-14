@@ -149,7 +149,7 @@ class UserController {
         // console.log(req.body)
         const { oldpassword, newpassword, cpassword } = req.body
         if (oldpassword && newpassword && cpassword) {
-            const user = await UserModel.findById(id)
+            const user = await UserModal.findById(id)
             const ismatch = await bcrypt.compare(oldpassword, user.password)
             if (!ismatch) {
                 
@@ -190,7 +190,7 @@ static profile_update = async (req, res) => {
   try {
       //console.log(req.files.image)
       if (req.files) {
-          const user = await UserModel.findById(req.user.id);
+          const user = await UserModal.findById(req.user.id);
           const image_id = user.image.public_id;
           await cloudinary.uploader.destroy(image_id);
 
