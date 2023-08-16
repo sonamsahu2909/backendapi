@@ -1,4 +1,4 @@
-const ProductModel = require("../modals/product");
+const CategoryModel = require('../modals/category')
 const cloudinary = require("cloudinary").v2;
 cloudinary.config({
     cloud_name: "dxhsy70tz",
@@ -6,24 +6,19 @@ cloudinary.config({
     api_secret: "MjvRwDuDpBUH4X6CKUx0wMFLCuE",
   });
 
-class Productcontroller {
-  static product = async (req, res) => {
+class Categorycontroller {
+  static category = async (req, res) => {
     const file = req.files.image;
 
     //console.log(file)
     const image_upload = await cloudinary.uploader.upload(file.tempFilePath, {
-      folder: "product",
+      folder: "vasu",
       width: 400,
     });
 
     try {
-      const data = new ProductModel({
+      const data = new CategoryModel({
         name: req.body.name,
-        description: req.body.description,
-        price: req.body.price,
-        stock: req.body.stock,
-        rating: req.body.rating,
-        category: req.body.category,
         image: {
           public_id: image_upload.public_id,
           url: image_upload.secure_url,
@@ -40,22 +35,22 @@ class Productcontroller {
     }
   };
 
-  static prodisplay = async (req, res) => {
-    const data = await ProductModel.find();
+  static catdisplay = async (req, res) => {
+    const data = await CategoryModel.find();
     res.status(200).json({
       success: true,
       data,
     });
   };
 
-  static prodelete = async (req, res) => {
-    const result = await ProductModel.findById(req.params.id);
+  static catdelete = async (req, res) => {
+    const result = await CategoryModel.findById(req.params.id);
     //console.log(result)
     const imgdata = result.image;
     //console.log(imgdata)
     await cloudinary.uploader.destroy(imgdata);
     try {
-      const data = await ProductModel.findByIdAndDelete(req.params.id);
+      const data = await CategoryModel.findByIdAndDelete(req.params.id);
       res.status(200).json({
         success: true,
         message: "Delete Successfully",
@@ -64,7 +59,6 @@ class Productcontroller {
       console.log(error);
     }
   };
-
- 
 }
-module.exports = Productcontroller;
+
+module.exports = Categorycontroller;

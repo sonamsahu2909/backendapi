@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken')
 const UserModal = require('../modals/user')
 
+
 const checkuserauth = async(req,res,next)=>{
 
     // console.log('hello auth')

@@ -3,8 +3,8 @@ const ProductController = require('../controllers/ProductController')
 const UserController = require('../controllers/UserController')
 const route = express.Router()
 const checkuserauth = require('../middleware/auth')
+const Categorycontroller = require('../controllers/CategoryController')
 
-route.get('/productdisplay',ProductController.display)
 
 // user controller
 
@@ -15,5 +15,16 @@ route.get('/getalluser',UserController.get_all_user)
 route.post('/updatepassword',checkuserauth,UserController.change_password)
 route.post('/updateprofile',checkuserauth,UserController.profile_update)
 route.get('/logout',UserController.logout)
+
+// productcontroller
+route.post('/product',ProductController.product)
+route.get('/product/display' , ProductController.prodisplay)
+route.get('/productdelete/:id',ProductController.prodelete)
+
+// category 
+route.post('/category' , Categorycontroller.category)
+route.get('/category/display',Categorycontroller.catdisplay)
+// route.post('/categoryupdate/:id',Categorycontroller.catupdate)
+route.get('/categorydelete/:id', Categorycontroller.catdelete)
 
 module.exports = route
