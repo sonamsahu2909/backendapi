@@ -79,7 +79,7 @@ class Productcontroller {
         const image_upload = await cloudinary.uploader.upload(
           file.tempFilePath,
           {
-            folder: "sonu",
+            folder: "product",
             width: 400,
           }
         );
