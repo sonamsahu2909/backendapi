@@ -12,14 +12,15 @@ route.post('/userinsert',UserController.userinsert)
 route.post('/verify_login',UserController.verify_login)
 route.get('/me',checkuserauth,UserController.get_user_detail)
 route.get('/getalluser',UserController.get_all_user)
-route.post('/updatepassword',checkuserauth,UserController.change_password)
-route.post('/updateprofile',checkuserauth,UserController.profile_update)
+route.post('/updatepassword',UserController.change_password)
+route.post('/updateprofile',UserController.profile_update)
 route.get('/logout',UserController.logout)
 
 // productcontroller
 route.post('/product',ProductController.product)
 route.get('/product/display' , ProductController.prodisplay)
 route.get('/productdelete/:id',ProductController.prodelete)
+route.get('/productdetail/:id',ProductController.productdetail)
 
 // category 
 route.post('/category' , Categorycontroller.category)

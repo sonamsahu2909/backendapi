@@ -65,6 +65,14 @@ class Productcontroller {
     }
   };
 
+  static productdetail = async(req,res) =>{
+    const productdetail = await ProductModel.findById(req.params.id);
+    res.status(200).json({
+      success: true,
+      pass,
+    });
+  }
+
  
 }
 module.exports = Productcontroller;

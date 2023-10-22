@@ -145,11 +145,11 @@ class UserController {
 
   static change_password = async (req, res) => {
     try {
-        const { name, email, id, image } = req.user
+        // const { name, email, id, image } = req.user
         // console.log(req.body)
-        const { oldpassword, newpassword, cpassword } = req.body
+        const { oldpassword, newpassword, cpassword,user_id } = req.body
         if (oldpassword && newpassword && cpassword) {
-            const user = await UserModal.findById(id)
+            const user = await UserModal.findById({_id: user_id})
             const ismatch = await bcrypt.compare(oldpassword, user.password)
             if (!ismatch) {
                 
@@ -164,7 +164,7 @@ class UserController {
                 }
                 else {
                     const newHashpassword = await bcrypt.hash(newpassword, 10)
-                    await UserModal.findByIdAndUpdate(id, {
+                    await UserModal.findByIdAndUpdate({_id: user_id}, {
                         $set: { password: newHashpassword }
 
                     })
@@ -186,6 +186,7 @@ class UserController {
         console.log('error')
     }
 }
+
 static profile_update = async (req, res) => {
   try {
       //console.log(req.files.image)
@@ -215,8 +216,9 @@ static profile_update = async (req, res) => {
           }
       }
       const update_profile = await UserModal.findByIdAndUpdate(req.user.id, data)
-      res.status(201)
-      .json({ status: "Success", message: "Profile Update successfully" });
+      console.log(update_profile)
+      // res.status(201)
+      // .json({ status: "Success", message: "Profile Update successfully" });
   } catch (error) {
       console.log(error)
   }
