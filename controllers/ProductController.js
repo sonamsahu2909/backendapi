@@ -69,7 +69,7 @@ class Productcontroller {
     const productdetail = await ProductModel.findById(req.params.id);
     res.status(200).json({
       success: true,
-      pass,
+      productdetail,
     });
   }
 
