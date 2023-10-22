@@ -65,6 +65,58 @@ class Productcontroller {
     }
   };
 
+  static product_update = async (req, res) => {
+    //console.log(req.params.id)
+    try {
+      //console.log(req.files.image)
+
+      if (req.files) {
+        const user = await ProductModel.findById(req.params.id);
+        const image_id = user.image.public_id;
+        await cloudinary.uploader.destroy(image_id);
+
+        const file = req.files.image;
+        const image_upload = await cloudinary.uploader.upload(
+          file.tempFilePath,
+          {
+            folder: "sonu",
+            width: 400,
+          }
+        );
+        var data = {
+          name: req.body.name,
+          description: req.body.description,
+          price: req.body.price,
+          stock: req.body.stock,
+          rating: req.body.rating,
+          category: req.body.category,
+          image: {
+            public_id: image_upload.public_id,
+            url: image_upload.secure_url,
+          },
+        };
+      } else {
+        var data = {
+          name: req.body.name,
+          description: req.body.description,
+          price: req.body.price,
+          stock: req.body.stock,
+          rating: req.body.rating,
+          category: req.body.category,
+        };
+      }
+      const update_category = await ProductModel.findByIdAndUpdate(
+        req.params.id,
+        data
+      );
+      res
+        .status(201)
+        .json({ status: "Success", message: "product Update successfully" });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   static productdetail = async(req,res) =>{
     const productdetail = await ProductModel.findById(req.params.id);
     res.status(200).json({

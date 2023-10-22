@@ -21,6 +21,7 @@ route.post('/product',ProductController.product)
 route.get('/product/display' , ProductController.prodisplay)
 route.get('/productdelete/:id',ProductController.prodelete)
 route.get('/productdetail/:id',ProductController.productdetail)
+route.post('/productupdate/:id',ProductController.product_update)
 
 // category 
 route.post('/category' , Categorycontroller.category)
