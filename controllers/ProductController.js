@@ -1,10 +1,10 @@
 const ProductModel = require("../modals/product");
 const cloudinary = require("cloudinary").v2;
 cloudinary.config({
-    cloud_name: "dxhsy70tz",
-    api_key: "743486792624739",
-    api_secret: "MjvRwDuDpBUH4X6CKUx0wMFLCuE",
-  });
+  cloud_name: "dxhsy70tz",
+  api_key: "743486792624739",
+  api_secret: "MjvRwDuDpBUH4X6CKUx0wMFLCuE",
+});
 
 class Productcontroller {
   static product = async (req, res) => {
@@ -66,13 +66,14 @@ class Productcontroller {
   };
 
   static product_update = async (req, res) => {
-    //console.log(req.params.id)
+    // console.log(req.params.id)
     try {
-      //console.log(req.files.image)
+      // console.log(req.files.image)
 
       if (req.files) {
         const user = await ProductModel.findById(req.params.id);
-        const image_id = user.image.public_id;
+        const image_id = user.image;
+        // console.log(image_id)
         await cloudinary.uploader.destroy(image_id);
 
         const file = req.files.image;
@@ -109,6 +110,7 @@ class Productcontroller {
         req.params.id,
         data
       );
+      await update_category.save();
       res
         .status(201)
         .json({ status: "Success", message: "product Update successfully" });
@@ -117,14 +119,12 @@ class Productcontroller {
     }
   };
 
-  static productdetail = async(req,res) =>{
+  static productdetail = async (req, res) => {
     const productdetail = await ProductModel.findById(req.params.id);
     res.status(200).json({
       success: true,
       productdetail,
     });
-  }
-
- 
+  };
 }
 module.exports = Productcontroller;
