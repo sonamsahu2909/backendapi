@@ -26,7 +26,7 @@ route.post('/productupdate/:id',ProductController.product_update)
 // category 
 route.post('/category' , Categorycontroller.category)
 route.get('/category/display',Categorycontroller.catdisplay)
-// route.post('/categoryupdate/:id',Categorycontroller.catupdate)
+route.post('/categoryupdate/:id',Categorycontroller.category_update)
 route.get('/categorydelete/:id', Categorycontroller.catdelete)
 
 module.exports = route
