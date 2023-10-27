@@ -4,6 +4,7 @@ const UserController = require('../controllers/UserController')
 const route = express.Router()
 const checkuserauth = require('../middleware/auth')
 const Categorycontroller = require('../controllers/CategoryController')
+const Slidercontroller = require('../controllers/SliderController')
 
 
 // user controller
@@ -28,5 +29,11 @@ route.post('/category' , Categorycontroller.category)
 route.get('/category/display',Categorycontroller.catdisplay)
 route.post('/categoryupdate/:id',Categorycontroller.category_update)
 route.get('/categorydelete/:id', Categorycontroller.catdelete)
+
+// productcontroller
+route.post('/sliderinsert',Slidercontroller.sliderInsert)
+route.get('/slider/display' , Slidercontroller.sliderdisplay)
+route.get('/sliderdelete/:id' , Slidercontroller.sliderdelete)
+route.post('/sliderupdate/:id' , Slidercontroller.slider_update)
 
 module.exports = route
