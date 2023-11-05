@@ -22,18 +22,18 @@ route.post('/product',ProductController.product)
 route.get('/product/display' , ProductController.prodisplay)
 // route.get('/productdelete/:id',ProductController.prodelete)
 route.get('/productdetail/:id',ProductController.productdetail)
-route.post('/productupdate/:id',ProductController.product_update)
+// route.post('/productupdate/:id',ProductController.product_update)
 
 // category 
 route.post('/category' , Categorycontroller.category)
 route.get('/category/display',Categorycontroller.catdisplay)
-route.post('/categoryupdate/:id',Categorycontroller.category_update)
+// route.post('/categoryupdate/:id',Categorycontroller.category_update)
 // route.get('/categorydelete/:id', Categorycontroller.catdelete)
 
 // productcontroller
 route.post('/sliderinsert',Slidercontroller.sliderInsert)
 route.get('/slider/display' , Slidercontroller.sliderdisplay)
 // route.get('/sliderdelete/:id' , Slidercontroller.sliderdelete)
-route.post('/sliderupdate/:id' , Slidercontroller.slider_update)
+// route.post('/sliderupdate/:id' , Slidercontroller.slider_update)
 
 module.exports = route
