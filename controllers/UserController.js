@@ -13,6 +13,7 @@ cloudinary.config({
 class UserController {
   static userinsert = async (req, res) => {
     // console.log(req.files.image)
+    // console.log(req.body)
     const file = req.files.image;
     const imageUpload = await cloudinary.uploader.upload(file.tempFilePath, {
       folder: "studentimage",
@@ -77,7 +78,7 @@ class UserController {
             const token = jwt.sign({ ID: user._id }, "shivanibansal@123#8962");
             res.cookie("token", token);
             res.status(200)
-              .json({status: "Success",message: "Login Successfully",token,});
+              .json({status: "Success",message: "Login Successfully",token,user});
           } else {
             res.status(401)
               .json({status: "failed",message: "Email password is not valid",});
