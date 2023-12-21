@@ -1,38 +1,55 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose");
 
 // define schema
-const UserSchema = new mongoose.Schema({
-    name:{
-        type:String,
-        required:true,    
+const UserSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: true,
     },
-    email:{
-        type:String,
-        required:true,
+    email: {
+      type: String,
+      required: true,
     },
-    password:{
-        type:String,
-        required:true,
+    mobile_number: {
+      type: String,
     },
-    image:    
-    {
+    gender: {
+      type: String,
+    },
+    state: {
+      type: String,
+    },
+    city: {
+      type: String,
+    },
+    name: {
+      type: String,
+    },
+    pincode: {
+      type: String,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+    image: {
       public_id: {
         type: String,
-        
       },
       url: {
         type: String,
-         
       },
     },
-    role:{
+    role: {
       type: String,
-      default: 'student'
-    }
-    
-},{timestamps:true})
+      default: "student",
+    },
+  },
+  { timestamps: true }
+);
 
 // create collection
 
-const UserModal = mongoose.model('users',UserSchema)
+const UserModal = mongoose.model("users", UserSchema);
 module.exports = UserModal;
