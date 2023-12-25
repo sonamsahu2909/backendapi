@@ -77,11 +77,21 @@ class UserController {
           if (ismatch) {
             const token = jwt.sign({ ID: user._id }, "shivanibansal@123#8962");
             res.cookie("token", token);
-            res.status(200)
-              .json({status: "Success",message: "Login Successfully",token,user});
+            res
+              .status(200)
+              .json({
+                status: "Success",
+                message: "Login Successfully",
+                token,
+                user,
+              });
           } else {
-            res.status(401)
-              .json({status: "failed",message: "Email password is not valid",});
+            res
+              .status(401)
+              .json({
+                status: "failed",
+                message: "Email password is not valid",
+              });
           }
         } else {
           res
@@ -110,13 +120,19 @@ class UserController {
   static profile = async (req, res) => {
     try {
       const { name, email, id, image } = req.user;
-      res.render("profile", {n: name,e: email,image: image,message: req.flash("success"),error: req.flash("error"),});
+      res.render("profile", {
+        n: name,
+        e: email,
+        image: image,
+        message: req.flash("success"),
+        error: req.flash("error"),
+      });
     } catch (error) {
       console.log(error);
     }
   };
 
-  static get_user_detail = async(req,res) =>{
+  static get_user_detail = async (req, res) => {
     try {
       // console.log(req.user);
       const user = await UserModal.findById(req.user.id);
@@ -127,10 +143,10 @@ class UserController {
       });
     } catch (error) {
       console.log(error);
-    }  
-  }
+    }
+  };
 
-  static get_all_user = async(req,res) =>{
+  static get_all_user = async (req, res) => {
     try {
       // console.log(req.user);
       const getalluser = await UserModal.find();
@@ -141,89 +157,93 @@ class UserController {
       });
     } catch (error) {
       console.log(error);
-    }  
-  }
+    }
+  };
 
   static change_password = async (req, res) => {
     try {
-        // const { name, email, id, image } = req.user
-        // console.log(req.body)
-        const { oldpassword, newpassword, cpassword,user_id } = req.body
-        if (oldpassword && newpassword && cpassword) {
-            const user = await UserModal.findById({_id: user_id})
-            const ismatch = await bcrypt.compare(oldpassword, user.password)
-            if (!ismatch) {
-                
-                res.status(400)
+      // const { name, email, id, image } = req.user
+      // console.log(req.body)
+      const { oldpassword, newpassword, cpassword, user_id } = req.body;
+      if (oldpassword && newpassword && cpassword) {
+        const user = await UserModal.findById({ _id: user_id });
+        const ismatch = await bcrypt.compare(oldpassword, user.password);
+        if (!ismatch) {
+          res
+            .status(400)
             .json({ status: "Failed", message: "Old Password is incorrect" });
-            }
-            else {
-                if (newpassword !== cpassword) {
-                    
-                    res.status(400)
-                    .json({ status: "Failed", message: "Password and confirm password is not matched" });
-                }
-                else {
-                    const newHashpassword = await bcrypt.hash(newpassword, 10)
-                    await UserModal.findByIdAndUpdate({_id: user_id}, {
-                        $set: { password: newHashpassword }
+        } else {
+          if (newpassword !== cpassword) {
+            res
+              .status(400)
+              .json({
+                status: "Failed",
+                message: "Password and confirm password is not matched",
+              });
+          } else {
+            const newHashpassword = await bcrypt.hash(newpassword, 10);
+            await UserModal.findByIdAndUpdate(
+              { _id: user_id },
+              {
+                $set: { password: newHashpassword },
+              }
+            );
 
-                    })
-                   
-                    res.status(201)
-                    .json({ status: "Success", message: "Password Change successfully" });
-                }
-            }
-
+            res
+              .status(201)
+              .json({
+                status: "Success",
+                message: "Password Change successfully",
+              });
+          }
         }
-        else {
-            res.status(400)
-            .json({ status: "Failed", message: "All field are required" });
-
-        }
-
-
+      } else {
+        res
+          .status(400)
+          .json({ status: "Failed", message: "All field are required" });
+      }
     } catch (error) {
-        console.log('error')
+      console.log("error");
     }
-}
+  };
 
-static profile_update = async (req, res) => {
-  try {
+  static profile_update = async (req, res) => {
+    try {
       //console.log(req.files.image)
       if (req.files) {
-          const user = await UserModal.findById(req.user.id);
-          const image_id = user.image.public_id;
-          await cloudinary.uploader.destroy(image_id);
+        const user = await UserModal.findById(req.user.id);
+        const image_id = user.image.public_id;
+        await cloudinary.uploader.destroy(image_id);
 
-          const file = req.files.image;
-          const myimage = await cloudinary.uploader.upload(file.tempFilePath, {
-              folder: "studentimage",
-
-          });
-          var data = {
-              name: req.body.name,
-              email: req.body.email,
-              image: {
-                  public_id: myimage.public_id,
-                  url: myimage.secure_url,
-              },
-          };
+        const file = req.files.image;
+        const myimage = await cloudinary.uploader.upload(file.tempFilePath, {
+          folder: "studentimage",
+        });
+        var data = {
+          name: req.body.name,
+          email: req.body.email,
+          image: {
+            public_id: myimage.public_id,
+            url: myimage.secure_url,
+          },
+        };
       } else {
-          var data = {
-              name: req.body.name,
-              email: req.body.email,
-
-          }
+        var data = {
+          name: req.body.name,
+          email: req.body.email,
+        };
       }
-      const update_profile = await UserModal.findByIdAndUpdate(req.user.id, data)
-      console.log(update_profile)
+      const update_profile = await UserModal.findByIdAndUpdate(
+        req.user.id,
+        data
+      );
+      console.log(update_profile);
       // res.status(201)
       // .json({ status: "Success", message: "Profile Update successfully" });
-  } catch (error) {
-      console.log(error)
-  }
-}
+    } catch (error) {
+      console.log(error);
+    }
+  };
 }
 
 module.exports = UserController;
