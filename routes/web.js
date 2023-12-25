@@ -13,8 +13,8 @@ route.post('/userinsert',UserController.userinsert)
 route.post('/verify_login',UserController.verify_login)
 route.get('/me',checkuserauth,UserController.get_user_detail)
 route.get('/getalluser',UserController.get_all_user)
-route.post('/updatepassword',UserController.change_password)
-route.post('/updateprofile',UserController.profile_update)
+route.post('/updatepassword',checkuserauth,UserController.change_password)
+route.post('/updateprofile',checkuserauth,UserController.profile_update)
 route.get('/logout',UserController.logout)
 
 // productcontroller
@@ -34,6 +34,6 @@ route.get('/category/display',Categorycontroller.catdisplay)
 route.post('/sliderinsert',Slidercontroller.sliderInsert)
 route.get('/slider/display' , Slidercontroller.sliderdisplay)
 // route.get('/sliderdelete/:id' , Slidercontroller.sliderdelete)
-// route.post('/sliderupdate/:id' , Slidercontroller.slider_update)
+route.post('/sliderupdate/:id' , Slidercontroller.slider_update)
 
 module.exports = route
