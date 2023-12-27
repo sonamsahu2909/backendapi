@@ -237,9 +237,9 @@ class UserController {
         req.user.id,
         data
       );
-      console.log(update_profile);
-      // res.status(201)
-      // .json({ status: "Success", message: "Profile Update successfully" });
+      // console.log(update_profile);
+      res.status(201)
+      .json({ status: "Success", message: "Profile Update successfully" });
     } catch (error) {
       console.log(error);
     }
