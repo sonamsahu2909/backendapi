@@ -11,7 +11,7 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    mobile_number: {
+    number: {
       type: String,
     },
     gender: {

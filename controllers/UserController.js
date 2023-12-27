@@ -222,6 +222,11 @@ class UserController {
         var data = {
           name: req.body.name,
           email: req.body.email,
+          number:req.body.number,
+          gender:req.body.gender,
+          state:req.body.state,
+          city:req.body.city,
+          pincode:req.body.pincode,
           image: {
             public_id: myimage.public_id,
             url: myimage.secure_url,
@@ -231,6 +236,11 @@ class UserController {
         var data = {
           name: req.body.name,
           email: req.body.email,
+          number:req.body.number,
+          gender:req.body.gender,
+          state:req.body.state,
+          city:req.body.city,
+          pincode:req.body.pincode,
         };
       }
       const update_profile = await UserModal.findByIdAndUpdate(
