@@ -164,9 +164,9 @@ class UserController {
     try {
       // const { name, email, id, image } = req.user
       // console.log(req.body)
-      const { oldpassword, newpassword, cpassword, user_id } = req.body;
+      const { oldpassword, newpassword, cpassword} = req.body;
       if (oldpassword && newpassword && cpassword) {
-        const user = await UserModal.findById({ _id: user_id });
+        const user = await UserModal.findById(req.user.id).select("+password")
         const ismatch = await bcrypt.compare(oldpassword, user.password);
         if (!ismatch) {
           res
@@ -183,7 +183,7 @@ class UserController {
           } else {
             const newHashpassword = await bcrypt.hash(newpassword, 10);
             await UserModal.findByIdAndUpdate(
-              { _id: user_id },
+              req.user.id,
               {
                 $set: { password: newHashpassword },
               }
